@@ -1,0 +1,83 @@
+swagger : "2.0"
+info:
+  title: My App.
+  description: This is my app.
+  version: 1.0
+  contact:
+    email: suraj@gmail.com
+    license:
+      name: Apache 2.0
+      url: "http://apache.org/"
+    servers:
+      -url: "https://localhost:3040/"
+      description: This is my local server
+      -url: "https://myapp.org/"
+      description: This is my company server
+
+schemes: [http,https]
+
+
+
+paths:
+# For Create User
+  /user/createUser:
+    post:
+      summary: Create User In DataBase
+      description: This api is use to create User in DataBase.
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: User Body
+        schema:
+          $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Failed
+
+# For Get User
+  /user/getUser:
+    post:
+      summary: Get User In DataBase
+      description: This api is use to Get User from DataBase.
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: User Body
+        schema:
+          $ref: "#/components/schemas/GetUser"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Failed
+
+
+
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        email: 
+          type: string
+        password:
+          type: string
+    GetUser:
+      type: object
+      properties:
+        email:
+         type: string
+            
