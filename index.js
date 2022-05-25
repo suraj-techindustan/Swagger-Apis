@@ -9,7 +9,7 @@ const YAML = require('yamljs')
 const swaggerJsDocs = YAML.load('./Swagger/api.yaml')
 
 
-app.use("/api-docs" , swaggerUI.serve , swaggerUI.setup(swaggerJsDocs))
+app.use("/" , swaggerUI.serve , swaggerUI.setup(swaggerJsDocs))
 app.use(express.json())
 
 
