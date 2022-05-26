@@ -4,7 +4,7 @@ const userRoutes = require('../Routes/userRoutes')
 
 module.exports = function(app){
 
-app.get('/',(req,res)=>{return res.send({message : "Welcome TO MY App"})})
+app.get('/default',(req,res)=>{return res.send({message : "Welcome TO MY App"})})
 
 app.use('/user',userRoutes)
 
