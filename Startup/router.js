@@ -7,7 +7,7 @@ const swaggerJsDocs = YAML.load('./Swagger/api.yaml')
 
 module.exports = function (app) {
 
-    app.get('/', (req, res) => { return res.render("home") })
+    app.get('/', (req, res) => { return res.send('Welcome TO API-Integration') })
     app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs))
     app.use('/user', userRoutes)
 
