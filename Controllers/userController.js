@@ -1,43 +1,62 @@
-const {User} = require('../Models/User')
-const asyncmiddleware  = require('../Middleware/async')
+const { User } = require('../Models/User')
+const asyncmiddleware = require('../Middleware/async')
+const sentrylogs = require('../Middleware/sentryAsync')
+
+exports.createUser = asyncmiddleware(async (req, res) => {
+
+    try {
+
+        const user = req.body
+
+        if (!user) return res.status(400).send({ message: "Please Enter All Fields" })
+
+        const { name = '', email = '', password = '' } = req.body || {}
 
 
-exports.createUser = asyncmiddleware(async(req,res)=>{
 
-const user = req.body 
-    
-if(!user) return res.status(400).send({message : "Please Enter All Fields"})
+        const result = new User({
+            name,
+            email,
+            password
+        })
 
-const {name = '' , email= '' , password =''} = req.body || {}
+        await result.save()
+
+        return res.status(200).send({ message: 'User Created ::', value: result })
+
+
+    } catch(ex){
+
+        res.status(400).send({message : ex.message})
+        sentrylogs({ex,op:"create User",name:"To create User"})
+
+    }
 
 
 
-const result = new User({
-    name,
-    email,
-    password
 })
 
-await result.save()
 
-return res.status(200).send({message : 'User Created ::' , value : result})
+exports.getUser = asyncmiddleware(async (req, res) => {
+
+    try{        
+            const user = req.body.email
+        
+            if (!user) return res.status(400).send({ message: "Enter Email" })
+        
+            const result = await User.findOne({ email: req.body.email })
+        
+            if (!result) return res.status(400).send({ message: "User Does't exists" })
+        
+            return res.status(200).send({ message: 'User Data ::', value: result })
 
 
-})
+    }catch(ex){
 
+        res.status(400).send({message : ex.message})
+        sentrylogs({ex,op:"Get User",name:"To Get User"})
 
-exports.getUser = asyncmiddleware(async(req,res)=>{
-
-const user = req.body.email
-
-if(!user) return res.status(400).send({message : "Enter Email"})
-
-const result = await User.findOne({email:req.body.email})
-
-if(!result) return res.status(400).send({message : "User Does't exists"})
-
-return res.status(200).send({message : 'User Data ::' , value : result})
-
+    }
 
 
 })
