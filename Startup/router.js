@@ -12,11 +12,6 @@ module.exports = function (app) {
     app.use('/user', userRoutes)
 
 
-
-
-
-
-
     app.use('*', (req, res) => { return res.send({ message: "Route You Are Looking For Does't Exists" }) })
 
 }
