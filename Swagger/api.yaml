@@ -1,6 +1,6 @@
 swagger : "2.0"
 info:
-  title: My App.
+  title: Savvy Swagger Doc.
   description: This is my app.
   version: 1.0
   contact:
